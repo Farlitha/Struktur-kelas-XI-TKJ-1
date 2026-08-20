@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OFFICIAL PORTAL XI TKJ 1</title>
+
+<!-- ================= FONTS ================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<!-- ================= TAILWIND CDN ================= -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          cyan: { 50:'#ecfeff',100:'#cffafe',200:'#a5f3fc',300:'#67e8f9',400:'#22d3ee',500:'#06b6d4',600:'#0891b2',700:'#0e7490' },
+          violet: { 50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#8b5cf6',600:'#7c3aed' },
+          sun: { 300:'#fde047',400:'#facc15',500:'#eab308' },
+          ink: '#0f172a'
+        },
+        fontFamily: {
+          display: ['Poppins','sans-serif'],
+          body: ['Inter','sans-serif'],
+          mono: ['JetBrains Mono','monospace']
+        },
+        boxShadow: {
+          glow: '0 0 0 1px rgba(6,182,212,0.15), 0 8px 30px -8px rgba(6,182,212,0.35)',
+          glowV: '0 0 0 1px rgba(139,92,246,0.15), 0 8px 30px -8px rgba(139,92,246,0.35)'
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --grid-line: rgba(15,23,42,0.05);
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Inter', sans-serif;
+    background-color:#f8fafc;
+    color:#0f172a;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  h1,h2,h3,h4,.font-display{ font-family:'Poppins', sans-serif; }
+  .font-mono{ font-family:'JetBrains Mono', monospace; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid #06b6d4;
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  .glass{
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.7);
+  }
+  .glass-dark{
+    background: rgba(15,23,42,0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .grad-text{
+    background: linear-gradient(90deg, #06b6d4 0%, #8b5cf6 60%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .badge-dot{
+    box-shadow: 0 0 0 4px rgba(6,182,212,0.15);
+  }
+
+  #netCanvas{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity:0.55;
+  }
+
+  .pulse-dot{
+    animation: pulseDot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDot{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:0.35; transform:scale(0.75); }
+  }
+
+  @keyframes floaty{
+    0%,100%{ transform: translateY(0px); }
+    50%{ transform: translateY(-10px); }
+  }
+  .float{ animation: floaty 5s ease-in-out infinite; }
+  .float-slow{ animation: floaty 7s ease-in-out infinite; }
+
+  .nav-link{ position:relative; }
+  .nav-link::after{
+    content:''; position:absolute; left:0; bottom:-4px; height:2px; width:0%;
+    background: linear-gradient(90deg,#06b6d4,#8b5cf6);
+    transition: width .3s ease;
+  }
+  .nav-link:hover::after, .nav-link.active::after{ width:100%; }
+  .nav-link.active{ color:#0891b2; }
+
+  .org-card{
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
+  }
+  .org-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -18px rgba(6,182,212,0.35);
+  }
+  .org-avatar{
+    background: conic-gradient(from 180deg, #06b6d4, #8b5cf6, #facc15, #06b6d4);
+    padding: 3px;
+  }
+  .org-avatar-inner{
+    background: linear-gradient(135deg,#e2f6fb,#ede9fe);
+  }
+
+  .day-card{ transition: transform .3s ease, box-shadow .3s ease; }
+  .day-card:hover{ transform: translateY(-6px) scale(1.01); }
+  .photo-frame{
+    background-image:
+      repeating-linear-gradient(45deg, rgba(6,182,212,0.08) 0 10px, rgba(139,92,246,0.08) 10px 20px);
+  }
+
+  .gallery-item{ transition: transform .4s ease, box-shadow .4s ease; }
+  .gallery-item:hover{ transform: translateY(-6px); }
+  .gallery-item:hover .gallery-overlay{ opacity:1; }
+  .gallery-overlay{ transition: opacity .35s ease; }
+
+  #mobileMenu{ transition: max-height .4s ease, opacity .3s ease; overflow:hidden; }
+
+  .reveal{ opacity:0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.show{ opacity:1; transform: translateY(0); }
+
+  .photo-upload-area{ background-size:cover; background-position:center; }
+  .photo-upload-thumb{ background-size:cover; background-position:center; }
+
+  ::selection{ background:#a78bfa; color:#fff; }
+
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:#f1f5f9; }
+  ::-webkit-scrollbar-thumb{ background:linear-gradient(#06b6d4,#8b5cf6); border-radius:8px; }
+</style>
+</head>
+
+<body class="antialiased text-slate-800">
+
+<!-- NAVBAR -->
+<header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <nav class="glass mx-3 mt-3 rounded-2xl md:mx-6 md:mt-4 px-4 md:px-6 py-3 flex items-center justify-between shadow-glow">
+    <a href="#beranda" class="flex items-center gap-2.5 group">
+      <span class="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-violet-500 text-white font-display font-bold shadow-md group-hover:scale-105 transition-transform">
+        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v6m0 0-5 4m5-4 5 4"/></svg>
+      </span>
+      <span class="font-display font-bold text-sm md:text-base tracking-tight">XI TKJ 1 <span class="grad-text">Portal</span></span>
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-600">
+      <li><a href="#beranda" class="nav-link active hover:text-cyan-600 transition-colors">Beranda</a></li>
+      <li><a href="#pengurus" class="nav-link hover:text-cyan-600 transition-colors">Pengurus Kelas</a></li>
+      <li><a href="#piket" class="nav-link hover:text-cyan-600 transition-colors">Jadwal Piket</a></li>
+      <li><a href="#galeri" class="nav-link hover:text-cyan-600 transition-colors">Galeri Kegiatan</a></li>
+    </ul>
+
+    <a href="#pengurus" class="hidden md:inline-flex items-center gap-2 rounded-xl bg-ink text-white text-sm font-semibold px-4 py-2.5 hover:bg-cyan-600 transition-colors shadow-md">
+      <span class="w-2 h-2 rounded-full bg-sun-400 pulse-dot"></span> Status: Online
+    </a>
+
+    <button id="menuBtn" aria-label="Buka menu navigasi" aria-expanded="false" class="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-white/70 border border-white shadow-sm">
+      <svg id="iconOpen" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="iconClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"><path d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </nav>
+
+  <div id="mobileMenu" class="md:hidden max-h-0 opacity-0 mx-3 mt-2">
+    <div class="glass rounded-2xl p-4 flex flex-col gap-1 font-medium text-sm shadow-glow">
+      <a href="#beranda" class="mobile-link px-3 py-2.5 rounded-xl hover:bg-cyan-50">🏠 Beranda</a>
+      <a href="#pengurus" class="mobile-link px-3 py-2.5 rounded-xl hover:bg-cyan-50">👥 Pengurus Kelas</a>
+      <a href="#piket" class="mobile-link px-3 py-2.5 rounded-xl hover:bg-cyan-50">🗓️ Jadwal Piket</a>
+      <a href="#galeri" class="mobile-link px-3 py-2.5 rounded-xl hover:bg-cyan-50">🖼️ Galeri Kegiatan</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section id="beranda" class="relative overflow-hidden pt-40 pb-24 md:pt-48 md:pb-32 px-5">
+  <canvas id="netCanvas"></canvas>
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/60 to-slate-50 pointer-events-none"></div>
+
+  <div class="hidden lg:block absolute top-36 left-[8%] float glass rounded-2xl px-4 py-3 shadow-glow">
+    <p class="font-mono text-xs text-cyan-700">PING 192.168.1.1</p>
+    <p class="font-mono text-[11px] text-emerald-500">✔️ 4 packets received</p>
+  </div>
+  <div class="hidden lg:block absolute bottom-24 right-[9%] float-slow glass rounded-2xl px-4 py-3 shadow-glowV">
+    <p class="font-mono text-xs text-violet-700">STATUS: <span class="text-emerald-500 font-semibold">CONNECTED</span></p>
+  </div>
+
+  <div class="relative max-w-5xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-mono font-medium text-cyan-700 mb-6 shadow-sm">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 pulse-dot"></span>
+      SMK &middot; TEKNIK KOMPUTER &amp; JARINGAN
+    </div>
+
+    <h1 class="font-display font-black text-4xl sm:text-5xl md:text-7xl leading-tight tracking-tight text-ink">
+      OFFICIAL PORTAL <br class="hidden sm:block">
+      <span class="grad-text">XI TKJ 1</span>
+    </h1>
+
+    <p class="mt-6 font-mono text-sm sm:text-base text-slate-500 max-w-xl mx-auto">
+      <span class="text-cyan-600">&gt;</span> connecting_people <span class="text-violet-500">::</span> building_network <span class="text-sun-500">::</span> since_2026_
+    </p>
+
+    <p class="mt-3 text-slate-600 max-w-2xl mx-auto text-base md:text-lg">
+      Bukan sekadar kelas, kami adalah <span class="font-semibold text-slate-800">satu jaringan solid</span> — tempat setiap node saling terhubung, saling support, dan siap nge-<em>ping</em> masa depan bareng-bareng. 🚀
+    </p>
+
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <a href="#pengurus" class="rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold px-6 py-3.5 shadow-glow hover:shadow-lg hover:-translate-y-0.5 transition-all">
+        Lihat Struktur Kelas
+      </a>
+      <a href="#galeri" class="rounded-xl glass font-semibold px-6 py-3.5 text-slate-700 hover:-translate-y-0.5 transition-all">
+        Jelajahi Galeri
+      </a>
+    </div>
+
+    <div class="mt-14 grid grid-cols-3 gap-3 max-w-lg mx-auto">
+      <div class="glass rounded-2xl py-4 px-2">
+        <p class="font-display font-extrabold text-xl md:text-2xl text-cyan-600">36</p>
+        <p class="text-[11px] md:text-xs text-slate-500 font-medium">Siswa Aktif</p>
+      </div>
+      <div class="glass rounded-2xl py-4 px-2">
+        <p class="font-display font-extrabold text-xl md:text-2xl text-violet-600">5</p>
+        <p class="text-[11px] md:text-xs text-slate-500 font-medium">Hari Piket</p>
+      </div>
+      <div class="glass rounded-2xl py-4 px-2">
+        <p class="font-display font-extrabold text-xl md:text-2xl text-sun-500">7</p>
+        <p class="text-[11px] md:text-xs text-slate-500 font-medium">Pengurus Inti</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PENGURUS KELAS -->
+<section id="pengurus" class="relative py-24 px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="font-mono text-xs uppercase tracking-widest text-violet-600 font-semibold">// struktur_organisasi</span>
+      <h2 class="font-display font-extrabold text-3xl md:text-5xl mt-2 text-ink">Pengurus Kelas</h2>
+      <p class="text-slate-500 mt-3 max-w-md mx-auto text-sm md:text-base">Node-node inti yang menjaga topologi kelas tetap stabil dan terkoneksi.</p>
+    </div>
+
+    <!-- Wali Kelas -->
+    <div class="flex justify-center mb-10 reveal">
+      <div class="org-card glass rounded-3xl p-6 w-full max-w-xs text-center shadow-glowV border-2 border-violet-200/70">
+        <div class="org-avatar w-24 h-24 rounded-full mx-auto relative">
+          <div class="org-avatar-inner photo-upload-area has-photo relative w-full h-full rounded-full flex items-center justify-center" data-photo-id="wali" style="background-image:url('Foto/pakyaniko.png');">
+          </div>
+        </div>
+        <span class="inline-block mt-4 text-[10px] font-mono font-bold tracking-wider text-violet-600 bg-violet-100 rounded-full px-3 py-1">ROOT ADMIN</span>
+        <h3 class="font-display font-bold text-lg mt-2 text-ink">Pak Yaniko</h3>
+        <p class="text-sm text-slate-500 font-medium">Wali Kelas</p>
+        <span class="inline-flex items-center gap-1.5 mt-3 text-[11px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-3 py-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 badge-dot"></span> Aktif
+        </span>
+      </div>
+    </div>
+
+    <div class="hidden md:block w-px h-10 bg-gradient-to-b from-violet-300 to-cyan-300 mx-auto"></div>
+
+    <!-- Ketua & Wakil -->
+    <div class="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-6 reveal">
+      <div class="org-card glass rounded-3xl p-6 text-center shadow-glow">
+        <div class="org-avatar w-20 h-20 rounded-full mx-auto relative">
+          <div class="org-avatar-inner photo-upload-area has-photo relative w-full h-full rounded-full flex items-center justify-center" data-photo-id="ketua" style="background-image:url('Foto/Jhon.jpg');">
+          </div>
+        </div>
+        <span class="inline-block mt-3 text-[10px] font-mono font-bold tracking-wider text-cyan-700 bg-cyan-100 rounded-full px-3 py-1">MAIN NODE</span>
+        <h3 class="font-display font-bold text-base mt-2 text-ink">Jhon Terry Eka Ramadhani</h3>
+        <p class="text-sm text-slate-500 font-medium">Ketua Kelas</p>
+        <span class="inline-flex items-center gap-1.5 mt-3 text-[11px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-3 py-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 badge-dot"></span> Aktif
+        </span>
+      </div>
+
+      <div class="org-card glass rounded-3xl p-6 text-center shadow-glow">
+        <div class="org-avatar w-20 h-20 rounded-full mx-auto relative">
+          <div class="org-avatar-inner photo-upload-area has-photo relative w-full h-full rounded-full flex items-center justify-center" data-photo-id="wakil" style="background-image:url('Foto/Cila.jpg');">
+          </div>
+        </div>
+        <span class="inline-block mt-3 text-[10px] font-mono font-bold tracking-wider text-cyan-700 bg-cyan-100 rounded-full px-3 py-1">SUB NODE</span>
+        <h3 class="font-display font-bold text-base mt-2 text-ink">Calya Aqila Al Mouzavie</h3>
+        <p class="text-sm text-slate-500 font-medium">Wakil Ketua Kelas</p>
+        <span class="inline-flex items-center gap-1.5 mt-3 text-[11px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-3 py-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 badge-dot"></span> Aktif
+        </span>
+      </div>
+    </div>
+
+    <!-- Sekretaris & Bendahara -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto reveal">
+      <div class="org-card glass rounded-2xl p-5 text-center">
+        <div class="org-avatar w-16 h-16 rounded-full mx-auto relative">
+          <div class="org-avatar-inner photo-upload-area has-photo relative w-full h-full rounded-full flex items-center justify-center" data-photo-id="sek1" style="background-image:url('Foto/Naura.jpg');">
+          </div>
+        </div>
+        <span class="inline-block mt-3 text-[9px] font-mono font-bold tracking-wider text-slate-500 bg-slate-100 rounded-full px-2.5 py-1">LEAF NODE</span>
+        <h3 class="font-display font-bold text-sm mt-2 text-ink">Naura Yuwan Ramandhita</h3>
+        <p class="text-xs text-slate-500 font-medium">Sekretaris 1</p>
+        <span class="inline-flex items-center gap-1 mt-2.5 text-[10px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-2.5 py-0.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 badge-dot"></span> Aktif
+        </span>
+      </div>
+
+      <div class="org-card glass rounded-2xl p-5 text-center">
+        <div class="org-avatar w-16 h-16 rounded-full mx-auto relative">
+          <div class="org-avatar-inner photo-upload-area has-photo relative w-full h-full rounded-full flex items-center justify-center" data-photo-id="sek2" style="background-image:url('Foto/Amel.jpg');">
+          </div>
+        </div>
+        <span class="inline-block mt-3 text-[9px] font-mono font-bold tracking-wider text-slate-500 bg-slate-100 rounded-full px-2.5 py-1">LEAF NODE</span>
+        <h3 class="font-display font-bold text-sm mt-2 text-ink">Amelia Fransiska</h3>
+        <p class="text-xs text-slate-500 font-medium">Sekretaris 2</p>
+        <span class="inline-flex items-center gap-1 mt-2.5 text-[10px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-2.5 py-0.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 badge-dot"></span> Aktif
+        </span>
+      </div>
+
+      <div class="org-card glass rounded-2xl p-5 text-center">
+        <div class="org-avatar w-16 h-16 rounded-full mx-auto relative">
+          <div class="org-avatar-inner photo-upload-area has-photo relative w-full h-full rounded-full flex items-center justify-center" data-photo-id="bendahara1" style="background-image:url('Foto/Ajeng.jpg');">
+          </div>
+        </div>
+        <span class="inline-block mt-3 text-[9px] font-mono font-bold tracking-wider text-slate-500 bg-slate-100 rounded-full px-2.5 py-1">LEAF NODE</span>
+        <h3 class="font-display font-bold text-sm mt-2 text-ink">Ajeng Ayu Siswati</h3>
+        <p class="text-xs text-slate-500 font-medium">Bendahara 1</p>
+        <span class="inline-flex items-center gap-1 mt-2.5 text-[10px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-2.5 py-0.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 badge-dot"></span> Aktif
+        </span>
+      </div>
+
+      <div class="org-card glass rounded-2xl p-5 text-center">
+        <div class="org-avatar w-16 h-16 rounded-full mx-auto relative">
+          <div class="org-avatar-inner photo-upload-area has-photo relative w-full h-full rounded-full flex items-center justify-center" data-photo-id="bendahara2" style="background-image:url('Foto/Abrin.jpg');">
+          </div>
+        </div>
+        <span class="inline-block mt-3 text-[9px] font-mono font-bold tracking-wider text-slate-500 bg-slate-100 rounded-full px-2.5 py-1">LEAF NODE</span>
+        <h3 class="font-display font-bold text-sm mt-2 text-ink">Farlitha As.Sabrin</h3>
+        <p class="text-xs text-slate-500 font-medium">Bendahara 2</p>
+        <span class="inline-flex items-center gap-1 mt-2.5 text-[10px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-2.5 py-0.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 badge-dot"></span> Aktif
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JADWAL PIKET -->
+<section id="piket" class="relative py-24 px-5 bg-gradient-to-b from-transparent via-cyan-50/40 to-transparent">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="font-mono text-xs uppercase tracking-widest text-cyan-600 font-semibold">// weekly_schedule.log</span>
+      <h2 class="font-display font-extrabold text-3xl md:text-5xl mt-2 text-ink">Jadwal Piket Kelas</h2>
+      <p class="text-slate-500 mt-3 max-w-md mx-auto text-sm md:text-base">5 hari kerja, 5 tim solid menjaga kebersihan &amp; kerapian ruang kelas.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-5" id="piketGrid">
+      <!-- SENIN -->
+      <div class="day-card glass rounded-3xl overflow-hidden shadow-glow reveal">
+        <div class="relative h-32 photo-frame photo-upload-area has-photo flex items-center justify-center" data-photo-id="piket-senin" style="background-image:url('Foto/piket senin.jpeg');">
+          <span class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-cyan-500 text-white text-xs font-bold font-display px-4 py-1.5 rounded-full shadow-md z-20">SENIN</span>
+        </div>
+        <div class="p-5 pt-7">
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Muhammad Ridhlo Maulana Akbar</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>M. Devan Abdika Bangsa</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Fabrianz Torino Putranzah</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Ahmad Zidan Alfadly</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Acha Bryan Firdaus</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Ahmad Khubaisy Muhsinin</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>Juan Dzakwan Hisyam</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SELASA -->
+      <div class="day-card glass rounded-3xl overflow-hidden shadow-glowV reveal">
+        <div class="relative h-32 photo-frame photo-upload-area has-photo flex items-center justify-center" data-photo-id="piket-selasa" style="background-image:url('Foto/piket selasa.jpeg');">
+          <span class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-violet-500 text-white text-xs font-bold font-display px-4 py-1.5 rounded-full shadow-md z-20">SELASA</span>
+        </div>
+        <div class="p-5 pt-7">
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>Silva Talitha Dzakira</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>Fizza Fahrian Dwidama</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>Muhammad Farid Byantara Kusuma</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>Khalil Azzam Mudji Maulinda</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>Nico Putra Pramana</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>Muhammad Akbar Brilian</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>Ahmad Sony Fahreza</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RABU -->
+      <div class="day-card glass rounded-3xl overflow-hidden shadow-glow reveal">
+        <div class="relative h-32 photo-frame photo-upload-area has-photo flex items-center justify-center" data-photo-id="piket-rabu" style="background-image:url('Foto/piket rabu.jpeg');">
+          <span class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-sun-400 text-ink text-xs font-bold font-display px-4 py-1.5 rounded-full shadow-md z-20">RABU</span>
+        </div>
+        <div class="p-5 pt-7">
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sun-400 shrink-0"></span>Naura Yuwan Ramandhita</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sun-400 shrink-0"></span>Nadine Anindya Alfian Putri</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sun-400 shrink-0"></span>Amelia Fransiska Dyah C</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sun-400 shrink-0"></span>Reyghen Ethan Bradly Simanjuntak</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sun-400 shrink-0"></span>Theodorius Adi Fatlolon</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sun-400 shrink-0"></span>Calya Aqila Mouzavie</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sun-400 shrink-0"></span>Muhammad Yafiq Nadim Rafif</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- KAMIS -->
+      <div class="day-card glass rounded-3xl overflow-hidden shadow-glow reveal">
+        <div class="relative h-32 photo-frame photo-upload-area has-photo flex items-center justify-center" data-photo-id="piket-kamis" style="background-image:url('Foto/piket kamis.jpeg');">
+          <span class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-cyan-600 text-white text-xs font-bold font-display px-4 py-1.5 rounded-full shadow-md z-20">KAMIS</span>
+        </div>
+        <div class="p-5 pt-7">
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0"></span>Ayyub</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0"></span>Ajeng Ayu Siswati</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0"></span>Dhaniel Wahyu Bahtiar</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0"></span>Ken Kanzan Makhfiyan</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0"></span>Baskoro Gadang Widhyodono</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0"></span>Raditya Satrio Abimanyu</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0"></span>Farlitha As.Sabrin</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- JUMAT -->
+      <div class="day-card glass rounded-3xl overflow-hidden shadow-glowV reveal">
+        <div class="relative h-32 photo-frame photo-upload-area has-photo flex items-center justify-center" data-photo-id="piket-jumat" style="background-image:url('Foto/piket jumat.jpeg');">
+          <span class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-violet-600 text-white text-xs font-bold font-display px-4 py-1.5 rounded-full shadow-md z-20">JUMAT</span>
+        </div>
+        <div class="p-5 pt-7">
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0"></span>Zidni Nuro M</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0"></span>Dwi Affandy</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0"></span>Lintang Albrian Anwar</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0"></span>Zanuar Eka Prasetya</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0"></span>Queensha Aurellia</li>
+            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 shrink-0"></span>Jhon Terry Eka Ramadhani</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALERI KEGIATAN -->
+<section id="galeri" class="relative py-24 px-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="font-mono text-xs uppercase tracking-widest text-violet-600 font-semibold">// media_gallery</span>
+      <h2 class="font-display font-extrabold text-3xl md:text-5xl mt-2 text-ink">Dokumentasi Kegiatan</h2>
+      <p class="text-slate-500 mt-3 max-w-md mx-auto text-sm md:text-base">Momen kebersamaan XI TKJ 1 yang terekam.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" id="galleryGrid">
+      
+      <div class="gallery-item rounded-3xl overflow-hidden glass shadow-glow group reveal">
+        <div class="h-48 photo-upload-area" style="background-image:url('Foto/lomba17.jpeg');"></div>
+        <div class="p-4">
+          <h3 class="font-display font-bold text-base text-ink">Lomba 17 Agustusan</h3>
+          <p class="text-xs text-slate-500 mt-1">Keseruan perayaan kemerdekaan kelas XI TKJ 1.</p>
+        </div>
+      </div>
+
+      <div class="gallery-item rounded-3xl overflow-hidden glass shadow-glow group reveal">
+        <div class="h-48 photo-upload-area" style="background-image:url('Foto/menghiaskls.jpeg');"></div>
+        <div class="p-4">
+          <h3 class="font-display font-bold text-base text-ink">Menghias Kelas</h3>
+          <p class="text-xs text-slate-500 mt-1">Gotong royong mempercantik ruang kelas.</p>
+        </div>
+      </div>
+
+      <div class="gallery-item rounded-3xl overflow-hidden glass shadow-glow group reveal">
+        <div class="h-48 photo-upload-area" style="background-image:url('Foto/Petugasupcr.jpeg');"></div>
+        <div class="p-4">
+          <h3 class="font-display font-bold text-base text-ink">Petugas Upacara</h3>
+          <p class="text-xs text-slate-500 mt-1">Dokumentasi saat bertugas pada upacara bendera.</p>
+        </div>
+      </div>
+
+      <div class="gallery-item rounded-3xl overflow-hidden glass shadow-glow group reveal">
+        <div class="h-48 photo-upload-area" style="background-image:url('Foto/Fotobersama.jpeg');"></div>
+        <div class="p-4">
+          <h3 class="font-display font-bold text-base text-ink">Foto Bersama</h3>
+          <p class="text-xs text-slate-500 mt-1">Momen kebersamaan seluruh siswa XI TKJ 1.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-8 text-center font-mono text-xs text-slate-400 border-t border-slate-200">
+  <p>&copy; 2026 XI TKJ 1 Portal. All rights reserved.</p>
+</footer>
+
+<!-- SCRIPT UNTUK INTERAKSI MENU & REVEAL -->
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const iconOpen = document.getElementById('iconOpen');
+  const iconClose = document.getElementById('iconClose');
+
+  menuBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('max-h-0');
+    if (isOpen) {
+      mobileMenu.classList.remove('max-h-0', 'opacity-0');
+      mobileMenu.classList.add('max-h-96', 'opacity-100');
+      iconOpen.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+    } else {
+      mobileMenu.classList.add('max-h-0', 'opacity-0');
+      mobileMenu.classList.remove('max-h-96', 'opacity-100');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
